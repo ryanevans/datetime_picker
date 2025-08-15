@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ultra Minimal Domino Datetime Picker Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./flatpickr.min.css">
+  <style>
+    body{font-family:'Nunito Sans',sans-serif;margin:24px;color:#111}
+    .wrap{max-width:520px;margin:0 auto}
+    .form-group{margin-bottom:16px}
+    label{display:block;font-weight:600;margin-bottom:6px}
+    /* Add dropdown chevron to the input */
+    #demo-date{
+      background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%236b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>') no-repeat right 12px center;
+      background-size:16px;
+      padding-right:36px;
+      cursor:pointer;
+      -webkit-appearance:none;appearance:none;
+    }
+
+    /* Custom calendar/layout overrides to ensure styling persists when moved */
+    :root{--fp-arrow-col:44px;}
+    .flatpickr-calendar{border-radius:12px!important;border:1px solid #e1e5e9!important;width:auto!important;min-width:360px!important;background:#fff!important;}
+    .flatpickr-months{padding:16px 8px 8px 8px!important;background:#fff!important;display:grid!important;grid-template-columns:var(--fp-arrow-col) 1fr var(--fp-arrow-col)!important;align-items:center!important;gap:0!important;position:relative!important;}
+    .flatpickr-months .flatpickr-month{grid-column:2!important;display:flex!important;justify-content:center!important;align-items:center!important;width:100%!important;}
+    .flatpickr-months .flatpickr-prev-month,.flatpickr-months .flatpickr-next-month{width:var(--fp-arrow-col)!important;}
+    .flatpickr-current-month .numInputWrapper{display:none!important;}
+    .flatpickr-weekdays{padding:0 12px!important;}
+    .flatpickr-weekdays .flatpickr-weekdaycontainer{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:6px!important;padding:0!important;box-sizing:border-box!important;width:100%!important;max-width:100%!important;}
+    .flatpickr-weekday{border:none!important;color:#6b7280!important;font-weight:600!important;text-align:center!important;}
+    .flatpickr-days{padding:8px 12px!important;width:100%!important;background:#fff!important;}
+    .flatpickr-days .dayContainer{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:6px!important;padding:0!important;box-sizing:border-box!important;width:100%!important;max-width:100%!important;}
+    .flatpickr-day{border:none!important;border-radius:8px!important;margin:0!important;width:auto!important;max-width:none!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+    .flatpickr-day.selected,.flatpickr-day.startRange,.flatpickr-day.endRange,.flatpickr-day.selected:focus,.flatpickr-day.selected:hover{background:#111!important;border-color:#111!important;color:#fff!important;border-radius:10px!important;}
+    .flatpickr-prev-month svg,.flatpickr-next-month svg{width:16px!important;height:16px!important;stroke-width:0.8px!important;stroke:#6b7280!important;}
+    .flatpickr-prev-month,.flatpickr-next-month{top:18px!important;justify-self:center!important;z-index:2!important;}
+    .flatpickr-current-month{padding-top:8px!important;font-family:'Nunito Sans',sans-serif!important;font-weight:700!important;font-size:1.25rem!important;display:flex!important;align-items:center!important;justify-content:center!important;width:auto!important;position:static!important;left:auto!important;transform:none!important;z-index:1!important;}
+    .flatpickr-current-month .flatpickr-monthDropdown-months{border:none!important;outline:none!important;background:none!important;padding:0 8px!important;margin:0!important;font-family:'Nunito Sans',sans-serif!important;font-weight:700!important;font-size:1.25rem!important;-webkit-appearance:none!important;-moz-appearance:none!important;appearance:none!important;background-image:none!important;width:auto!important;min-width:0!important;text-align:center!important;text-align-last:center!important;}
+    .flatpickr-monthDropdown-months::-ms-expand{display:none!important;}
+    .custom-time-row{position:relative;background:#fff!important;border-radius:0 0 12px 12px!important;margin:0!important;padding:12px 8px 4px!important;border-bottom:none!important;}
+    .custom-time-row::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:#e1e5e9!important;}
+    .flatpickr-input:focus,.flatpickr-input.active,.flatpickr-input:focus-visible{outline:none!important;border-color:#111!important;box-shadow:0 0 0 3px rgba(17,17,17,0.1)!important;}
+    .flatpickr-calendar .flatpickr-time{background:#fff!important;box-shadow:none!important;border-top:1px solid #e1e5e9!important;border-bottom:none!important;margin-top:4px!important;}
+    .flatpickr-calendar .flatpickr-time .numInputWrapper{background:#fff!important;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="form-group">
+      <label for="demo-date">Event Date</label>
+      <input id="demo-date" style="width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:8px;font-size:1rem;" placeholder="Select date & time" value="Thu, Aug 14 at 1:30 PM" readonly>
+    </div>
+  </div>
+
+  <script src="./flatpickr.min.js"></script>
+  <script src="./datetime-availability-picker.js"></script>
+  <script>
+    // Fallback: if the availability helper isn't present, try to load it again (e.g., file:// quirks)
+    if (!window.attachDominoAvailability) {
+      var s = document.createElement('script');
+      s.src = './datetime-availability-picker.js?v=' + Date.now();
+      document.head.appendChild(s);
+    }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const input = document.getElementById('demo-date');
+      const fp = flatpickr(input, {
+        enableTime: true,
+        dateFormat: "D, M j \\at h:i K",
+        defaultDate: input.value,
+        minDate: new Date(),
+        onReady: function(selectedDates, dateStr, instance){
+          if(window.attachDominoAvailability){
+            window.attachDominoAvailability(instance, { autoDisableUntilChange: true, customTimeUI: true });
+          }
+        },
+        onClose: function(selectedDates, dateStr, instance){
+          input.value = dateStr;
+          if(window.startCheck) window.startCheck(instance);
+        }
+      });
+      input.addEventListener('click', ()=> fp.open());
+    });
+  </script>
+</body>
+</html>
+
+
